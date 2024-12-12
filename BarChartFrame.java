@@ -80,15 +80,37 @@ class BarChartFrame extends Frame
 			StreamTokenizer	tokens = new StreamTokenizer(bridge);
 
 			while (tokens.nextToken() != StreamTokenizer.TT_EOF) {
+				if (tokens.ttype != StreamTokenizer.TT_NUMBER) {
+					JOptionPane.showMessageDialog(null,
+							"Invalid data value: Expected an integer. Found: " + tokens.sval,
+							"Data Input Error",
+							JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
 				int number = (int) tokens.nval;
 				tokens.nextToken();
+				if (tokens.ttype != StreamTokenizer.TT_WORD) {
+					JOptionPane.showMessageDialog(null,
+							"Invalid label: Expected a string. Found: " + tokens.nval,
+							"Label Input Error",
+							JOptionPane.ERROR_MESSAGE);
+					continue;
+				}
 				String label = tokens.sval;
 				tokens.nextToken();
-				Color color = (Color) colorMap.get(tokens.sval);
+				if (tokens.ttype != StreamTokenizer.TT_WORD || !colorMap.containsKey(tokens.sval)) {
+					JOptionPane.showMessageDialog(null,
+							"Invalid color: '" + tokens.sval + "' is not recognized. Defaulting to black.",
+							"Color Input Warning",
+							JOptionPane.WARNING_MESSAGE);
+					colors.addElement(Color.BLACK);
+				} else {
+					colors.addElement(colorMap.get(tokens.sval));
+				}
 
 				data.addElement(new Integer(number));
 				labels.addElement(label);
-				colors.addElement(color);
+//				colors.addElement(color);
 			}
 		}
 		catch (Exception e) {e.printStackTrace();}
