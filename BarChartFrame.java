@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.Vector;
 import java.util.Hashtable;
-
+import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 class BarChartFrame extends Frame
 {
@@ -27,6 +27,22 @@ class BarChartFrame extends Frame
 		{
 			if (e.getSource() instanceof Button)
 			{
+				String selectedColorName = colorSelect.getSelectedItem();
+				Color selectedColor = colorMap.get(selectedColorName);
+				boolean colorExists = false;
+				for (Color color : colors) {
+					if (color.equals(selectedColor)) {
+						colorExists = true;
+						break;
+					}
+				}
+				if (colorExists) {
+					JOptionPane.showMessageDialog(null,
+							"Warning: The selected color is already in use.",
+							"Duplicate Color",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				labels.addElement(labelSelect.getText());
 				data.addElement(new Integer(dataSelect.getText()));
 				colors.addElement(colorMap.get(colorSelect.getSelectedItem()));
