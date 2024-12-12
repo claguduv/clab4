@@ -82,7 +82,7 @@ class BarChartFrame extends Frame
 			while (tokens.nextToken() != StreamTokenizer.TT_EOF) {
 				if (tokens.ttype != StreamTokenizer.TT_NUMBER) {
 					JOptionPane.showMessageDialog(null,
-							"Invalid data value: Expected an integer. Found: " + tokens.sval,
+							"Invalid data value: requires an integer. Found: " + tokens.sval,
 							"Data Input Error",
 							JOptionPane.ERROR_MESSAGE);
 					continue;
@@ -91,7 +91,7 @@ class BarChartFrame extends Frame
 				tokens.nextToken();
 				if (tokens.ttype != StreamTokenizer.TT_WORD) {
 					JOptionPane.showMessageDialog(null,
-							"Invalid label: Expected a string. Found: " + tokens.nval,
+							"Invalid label: requires a string. Found: " + tokens.nval,
 							"Label Input Error",
 							JOptionPane.ERROR_MESSAGE);
 					continue;
@@ -100,7 +100,7 @@ class BarChartFrame extends Frame
 				tokens.nextToken();
 				if (tokens.ttype != StreamTokenizer.TT_WORD || !colorMap.containsKey(tokens.sval)) {
 					JOptionPane.showMessageDialog(null,
-							"Invalid color: '" + tokens.sval + "' is not recognized. Defaulting to black.",
+							"Invalid color: '" + tokens.sval + "' is not known, blakc is default.",
 							"Color Input Warning",
 							JOptionPane.WARNING_MESSAGE);
 					colors.addElement(Color.BLACK);
