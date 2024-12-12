@@ -1,6 +1,6 @@
 import java.awt.*;
 import java.util.Vector;
-
+import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 class BarChart extends Panel
 {			   
@@ -21,6 +21,13 @@ class BarChart extends Panel
 		Image duke = Toolkit.getDefaultToolkit().getImage("duke2.gif");
 		g.drawImage(duke, 80, 10, this);
 
+		if (data.size() == 0 || dataLabels.size() == 0 || dataColors.size() == 0 || data.size() != dataLabels.size() || data.size() != dataColors.size()) {
+			// Gracefully handle the error by showing a dialog
+			JOptionPane.showMessageDialog(this,
+					"number, labels, and colors must have values and of the same size.",
+					"Check vector", JOptionPane.ERROR_MESSAGE);
+			return; // Exit the method to prevent drawing
+		}
 		for (int i = 0; i < data.size(); i++)
 		{				  
 			int yposition = 100+i*barWidth;
